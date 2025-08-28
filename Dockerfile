@@ -1,20 +1,15 @@
-# Dựa trên Tomcat 10 + JDK 17
+# Chạy Tomcat 10 + JDK 17
 FROM tomcat:10.1-jdk17
 
-# Tomcat phải nghe đúng PORT của Render
+# Xoá app mẫu
+RUN rm -rf /usr/local/tomcat/webapps/*
+
+# Dùng cấu hình server.xml để Tomcat bind vào $PORT
 COPY server.xml /usr/local/tomcat/conf/server.xml
 
-# 1) Copy resource tĩnh & JSP vào ROOT context
-COPY src/main/webapp/ /usr/local/tomcat/webapps/ROOT/
+# Copy WAR của bạn thành ROOT.war để app chạy ở "/"
+# Nếu file .war của bạn tên khác thì sửa lại cho khớp.
+COPY nttin02email.war /usr/local/tomcat/webapps/ROOT.war
 
-# 2) Copy nguồn Java và biên dịch vào WEB-INF/classes
-COPY src/main/java/ /tmp/src/
-RUN mkdir -p /usr/local/tomcat/webapps/ROOT/WEB-INF/classes \
- && find /tmp/src -name "*.java" > /tmp/sources.txt \
- && javac -encoding UTF-8 \
-    -classpath "/usr/local/tomcat/lib/*" \
-    -d /usr/local/tomcat/webapps/ROOT/WEB-INF/classes \
-    @/tmp/sources.txt \
- && rm -rf /tmp/src /tmp/sources.txt
-
+# Chạy Tomcat
 CMD ["catalina.sh","run"]
