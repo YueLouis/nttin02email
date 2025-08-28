@@ -1,10 +1,15 @@
-FROM tomcat:10.1-jdk17
+FROM tomcat:10.1-jdk17-temurin
 
-# dọn app mặc định của tomcat
+# Bỏ các app mặc định để tránh chiếm ROOT
 RUN rm -rf /usr/local/tomcat/webapps/*
 
-# copy WAR của mình thành ROOT.war (app chạy ở "/")
+# Dùng cấu hình server.xml của mình
+COPY server.xml /usr/local/tomcat/conf/server.xml
+
+# Deploy WAR của em làm ROOT để URL là /survey
 COPY nttin02email.war /usr/local/tomcat/webapps/ROOT.war
 
-# Render đặt PORT động (vd 10000). Sửa conf/server.xml lúc khởi động rồi chạy Tomcat
-CMD sh -c 'sed -ri "s/port=\"8080\"/port=\"${PORT}\"/" /usr/local/tomcat/conf/server.xml && catalina.sh run'
+# (Metadata thôi, Render không dùng EXPOSE để map cổng)
+EXPOSE 10000
+
+CMD ["catalina.sh", "run"]
