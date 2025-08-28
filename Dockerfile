@@ -1,15 +1,18 @@
-FROM tomcat:10.1-jdk17-temurin
+FROM tomcat:10.1-jdk17
 
-# Bỏ các app mặc định để tránh chiếm ROOT
+# Gỡ webapps mặc định
 RUN rm -rf /usr/local/tomcat/webapps/*
 
-# Dùng cấu hình server.xml của mình
+# server.xml để Tomcat bind đúng PORT Render cấp
 COPY server.xml /usr/local/tomcat/conf/server.xml
 
-# Deploy WAR của em làm ROOT để URL là /survey
+# Deploy app làm ROOT (đường dẫn là /)
 COPY nttin02email.war /usr/local/tomcat/webapps/ROOT.war
 
-# (Metadata thôi, Render không dùng EXPOSE để map cổng)
+# Giữ encoding UTF-8
+ENV JAVA_OPTS="-Dfile.encoding=UTF-8 -Dsun.jnu.encoding=UTF-8"
+
+# (không bắt buộc) khai báo cho rõ
 EXPOSE 10000
 
-CMD ["catalina.sh", "run"]
+CMD ["catalina.sh","run"]

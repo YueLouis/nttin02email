@@ -2,13 +2,14 @@
 <Server port="-1" shutdown="SHUTDOWN">
   <Service name="Catalina">
     <Connector
-        protocol="HTTP/1.1"
         port="${env.PORT}"
         address="0.0.0.0"
+        protocol="HTTP/1.1"
         connectionTimeout="20000"
-        URIEncoding="UTF-8"/>
+        URIEncoding="UTF-8" />
     <Engine name="Catalina" defaultHost="localhost">
-      <Host name="localhost" appBase="webapps" unpackWARs="true" autoDeploy="true"/>
+      <Host name="localhost" appBase="webapps"
+            unpackWARs="true" autoDeploy="true" />
     </Engine>
   </Service>
 </Server>
