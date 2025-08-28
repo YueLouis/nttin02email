@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Server port="-1" shutdown="SHUTDOWN">
   <Service name="Catalina">
-    <!-- Tomcat phải nghe đúng cổng Render cấp qua biến môi trường PORT -->
-    <Connector port="${env.PORT}" protocol="HTTP/1.1"
-               connectionTimeout="20000" URIEncoding="UTF-8"/>
+    <!-- Lắng nghe đúng cổng Render -->
+    <Connector port="10000" protocol="HTTP/1.1"
+               address="0.0.0.0"
+               connectionTimeout="20000"
+               URIEncoding="UTF-8"/>
     <Engine name="Catalina" defaultHost="localhost">
       <Host name="localhost" appBase="webapps" unpackWARs="true" autoDeploy="true"/>
     </Engine>

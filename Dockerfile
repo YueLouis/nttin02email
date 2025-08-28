@@ -1,15 +1,15 @@
-# Chạy Tomcat 10 + JDK 17
-FROM tomcat:10.1-jdk17
+FROM tomcat:10.1-jdk17-temurin
 
-# Xoá app mẫu
+# Xóa apps mặc định để tránh trùng ROOT
 RUN rm -rf /usr/local/tomcat/webapps/*
 
-# Dùng cấu hình server.xml để Tomcat bind vào $PORT
-COPY server.xml /usr/local/tomcat/conf/server.xml
-
-# Copy WAR của bạn thành ROOT.war để app chạy ở "/"
-# Nếu file .war của bạn tên khác thì sửa lại cho khớp.
+# Dùng WAR build sẵn của bạn làm ROOT
 COPY nttin02email.war /usr/local/tomcat/webapps/ROOT.war
 
-# Chạy Tomcat
-CMD ["catalina.sh","run"]
+# Ghi đè cấu hình Tomcat bằng server.xml ở repo
+COPY server.xml /usr/local/tomcat/conf/server.xml
+
+# Khai báo port để Render tự phát hiện
+EXPOSE 10000
+
+CMD ["catalina.sh", "run"]
