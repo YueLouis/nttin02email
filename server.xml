@@ -1,11 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <Server port="-1" shutdown="SHUTDOWN">
   <Service name="Catalina">
-    <Connector address="0.0.0.0"
-               port="8080"
-               protocol="HTTP/1.1"
-               connectionTimeout="20000"
-               URIEncoding="UTF-8" />
+  
+    <Connector address="0.0.0.0" port="${PORT}" protocol="HTTP/1.1"
+               connectionTimeout="20000" URIEncoding="UTF-8"/>
     <Engine name="Catalina" defaultHost="localhost">
       <Host name="localhost" appBase="webapps" unpackWARs="true" autoDeploy="true"/>
     </Engine>

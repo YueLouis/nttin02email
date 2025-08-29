@@ -4,6 +4,8 @@ WORKDIR /usr/local/tomcat/webapps
 
 COPY nttin02email.war ./ROOT.war
 
-EXPOSE 8080
+COPY server.xml /usr/local/tomcat/conf/server.xml
+
+EXPOSE 8080  
 
 CMD ["catalina.sh", "run"]
